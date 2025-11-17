@@ -10,7 +10,7 @@ cmds = [
 
 [phases.build]
 cmds = [
-    "php artisan config:cache",
+    # Don't cache config during build - Railway env vars need to be read at runtime
     "php artisan route:cache",
     "php artisan view:cache"
 ]

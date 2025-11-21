@@ -83,6 +83,7 @@ Route::prefix('v1/admin')->middleware(['auth:sanctum'])->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/chart-data', [DashboardController::class, 'chartData']);
     
     // Perks Management
     Route::apiResource('perks', AdminPerkController::class);

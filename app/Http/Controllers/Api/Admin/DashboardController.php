@@ -74,4 +74,47 @@ class DashboardController extends Controller
             ]
         ]);
     }
+
+    public function chartData(Request $request)
+    {
+        $month = $request->input('month', now()->format('Y-m'));
+
+        $startDate = \Carbon\Carbon::parse($month . '-01')->startOfMonth();
+        $endDate = $startDate->copy()->endOfMonth();
+
+        $daysInMonth = $startDate->daysInMonth;
+
+        $perksData = [];
+        $leadsData = [];
+
+        for ($day = 1; $day <= $daysInMonth; $day++) {
+            $date = $startDate->copy()->day($day);
+            $label = $date->format('j');
+
+            $perksCount = Perk::whereDate('created_at', $date->format('Y-m-d'))->count();
+
+            $leadsCount = Lead::whereDate('created_at', $date->format('Y-m-d'))->count();
+
+            $perksData[] = [
+                'label' => $label,
+                'value' => $perksCount
+            ];
+
+            $leadsData[] = [
+                'label' => $label,
+                'value' => $leadsCount
+            ];
+        }
+
+        return response()->json([
+            'success' => true,
+            'perks' => $perksData,
+            'leads' => $leadsData,
+            'month' => $month,
+            'period' => [
+                'start' => $startDate->format('Y-m-d'),
+                'end' => $endDate->format('Y-m-d')
+            ]
+        ]);
+    }
 }

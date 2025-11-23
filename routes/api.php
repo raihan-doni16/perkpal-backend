@@ -127,6 +127,8 @@ Route::prefix('v1/admin')->middleware(['auth:sanctum'])->group(function () {
     // Settings Management
     Route::get('/settings', [AdminSettingController::class, 'index']);
     Route::post('/settings', [AdminSettingController::class, 'update']);
+    Route::post('/settings/change-password', [AdminSettingController::class, 'changePassword']);
+    Route::post('/settings/change-email', [AdminSettingController::class, 'changeEmail']);
 
     // Page Content Management (CMS for Content Editor)
     Route::get('/page-content', [AdminPageContentController::class, 'index']);

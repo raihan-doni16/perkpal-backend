@@ -13,6 +13,7 @@ class SettingSeeder extends Seeder
             ['key' => 'contact_email', 'value' => 'hello@perkpal.com', 'type' => 'string', 'group_name' => 'general'],
             ['key' => 'perks_per_page', 'value' => '12', 'type' => 'integer', 'group_name' => 'display'],
             ['key' => 'enable_search', 'value' => 'true', 'type' => 'boolean', 'group_name' => 'features'],
+            ['key' => 'lead_notification_email', 'value' => 'hello@perkpal.com', 'type' => 'string', 'group_name' => 'notifications'],
         ];
         foreach ($settings as $setting) {
             Setting::updateOrCreate(

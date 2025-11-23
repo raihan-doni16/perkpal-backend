@@ -22,6 +22,7 @@ class PerkDetailResource extends JsonResource
             "description" => $this->description,
             "partner_name" => $this->partner_name,
             "partner_logo" => $this->partner_logo ? asset("storage/" . $this->partner_logo) : null,
+            "partner_url" => $this->partner_url,
             "redeem_type" => $this->redeem_type,
             "coupon_code" => $this->coupon_code,
             "external_url" => $this->external_url,

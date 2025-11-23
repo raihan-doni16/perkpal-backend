@@ -102,7 +102,7 @@ class PageContentController extends Controller
                 'label' => 'Terms of Service',
                 'sections' => [
                     ['key' => 'terms_hero', 'type' => 'hero', 'label' => 'Hero Section'],
-                    ['key' => 'terms_content', 'type' => 'content', 'label' => 'Terms Content'],
+                    ['key' => 'terms_sections', 'type' => 'terms', 'label' => 'Terms Sections'],
                 ],
             ],
             [
@@ -110,7 +110,7 @@ class PageContentController extends Controller
                 'label' => 'Privacy Policy',
                 'sections' => [
                     ['key' => 'privacy_hero', 'type' => 'hero', 'label' => 'Hero Section'],
-                    ['key' => 'privacy_content', 'type' => 'content', 'label' => 'Privacy Content'],
+                    ['key' => 'privacy_sections', 'type' => 'terms', 'label' => 'Privacy Sections'],
                 ],
             ],
             [
@@ -118,6 +118,16 @@ class PageContentController extends Controller
                 'label' => 'Top Bar',
                 'sections' => [
                     ['key' => 'topbar_logo', 'type' => 'logo_title', 'label' => 'Logo & Title'],
+                    ['key' => 'topbar_links', 'type' => 'links', 'label' => 'Navigation Links'],
+                    ['key' => 'topbar_cta', 'type' => 'links', 'label' => 'Primary CTA'],
+                ],
+            ],
+            [
+                'name' => 'footer',
+                'label' => 'Footer',
+                'sections' => [
+                    ['key' => 'footer_nav_links', 'type' => 'links', 'label' => 'Navigation Links'],
+                    ['key' => 'footer_social_links', 'type' => 'links', 'label' => 'Social Media Links'],
                 ],
             ],
         ];
@@ -140,6 +150,9 @@ class PageContentController extends Controller
             'section_key' => 'required|string',
             'title' => 'nullable|string',
             'subtitle' => 'nullable|string',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string|max:500',
+            'meta_keywords' => 'nullable|string|max:255',
             'content' => 'nullable',
             'image_url' => 'nullable|string',
             'display_order' => 'nullable|integer',
@@ -160,6 +173,9 @@ class PageContentController extends Controller
             'section_key',
             'title',
             'subtitle',
+            'meta_title',
+            'meta_description',
+            'meta_keywords',
             'content',
             'image_url',
             'display_order',
@@ -187,6 +203,9 @@ class PageContentController extends Controller
             'sections.*.section_key' => 'required|string',
             'sections.*.title' => 'nullable|string',
             'sections.*.subtitle' => 'nullable|string',
+            'sections.*.meta_title' => 'nullable|string|max:255',
+            'sections.*.meta_description' => 'nullable|string|max:500',
+            'sections.*.meta_keywords' => 'nullable|string|max:255',
             'sections.*.content' => 'nullable',
             'sections.*.image_url' => 'nullable|string',
             'sections.*.display_order' => 'nullable|integer',
@@ -222,7 +241,7 @@ class PageContentController extends Controller
     public function uploadImage(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,webp,svg|max:15360',
             'section_key' => 'required|string',
         ]);
 

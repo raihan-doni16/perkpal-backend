@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             PerkSeoSeeder::class,
             PerkStatisticsSeeder::class,
             LeadSeeder::class,
+            PageContentSeeder::class,
         ]);
 
         $this->command->info('');

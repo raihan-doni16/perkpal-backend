@@ -23,6 +23,13 @@ class JournalPost extends Model
         'author_avatar',
         'is_published',
         'published_at',
+        'meta_title',
+        'meta_description',
+        'og_title',
+        'og_description',
+        'og_image',
+        'twitter_title',
+        'twitter_description',
     ];
 
     protected $casts = [

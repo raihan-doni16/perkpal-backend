@@ -18,6 +18,7 @@ class InboxResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'contact' => $this->contact,
             'subject' => $this->subject,
             'message' => $this->message,
             'is_read' => $this->is_read,

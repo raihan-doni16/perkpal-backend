@@ -55,6 +55,15 @@ class PerkController extends Controller
     {
         $data = $request->validated();
 
+        // If description not provided, fallback to short_description to avoid null display downstream
+        if (empty($data['description']) && !empty($data['short_description'])) {
+            $data['description'] = $data['short_description'];
+        }
+
+        // Default to draft if no status provided
+        if (!isset($data['status'])) {
+            $data['status'] = 'draft';
+        }
 
         if ($request->hasFile('partner_logo')) {
             $data['partner_logo'] = $request->file('partner_logo')->store('perks/logos', 'public');
@@ -140,6 +149,15 @@ class PerkController extends Controller
     {
         $perk = Perk::findOrFail($id);
         $data = $request->validated();
+
+        if (empty($data['description']) && !empty($data['short_description'])) {
+            $data['description'] = $data['short_description'];
+        }
+
+        // Keep existing status if not provided
+        if (!isset($data['status'])) {
+            $data['status'] = $perk->status ?? 'draft';
+        }
 
 
         if ($request->hasFile('partner_logo')) {

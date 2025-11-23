@@ -58,6 +58,9 @@ class JournalController extends Controller
         if ($request->hasFile('cover_image')) {
             $data['cover_image'] = $request->file('cover_image')->store('journal/covers', 'public');
         }
+        if ($request->hasFile('og_image')) {
+            $data['og_image'] = $request->file('og_image')->store('journal/og-images', 'public');
+        }
         if ($request->hasFile('author_avatar')) {
             $data['author_avatar'] = $request->file('author_avatar')->store('journal/avatars', 'public');
         }
@@ -94,6 +97,13 @@ class JournalController extends Controller
                 Storage::disk('public')->delete($post->cover_image);
             }
             $data['cover_image'] = $request->file('cover_image')->store('journal/covers', 'public');
+        }
+
+        if ($request->hasFile('og_image')) {
+            if ($post->og_image) {
+                Storage::disk('public')->delete($post->og_image);
+            }
+            $data['og_image'] = $request->file('og_image')->store('journal/og-images', 'public');
         }
 
         // Handle author avatar

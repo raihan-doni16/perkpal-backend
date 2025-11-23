@@ -13,7 +13,7 @@ class PageContentSeeder extends Seeder
     public function run(): void
     {
         $contents = [
-            // ============ HOMEPAGE ============
+            // HOMEPAGE
             [
                 'page_name' => 'homepage',
                 'section_type' => 'hero',
@@ -32,21 +32,9 @@ class PageContentSeeder extends Seeder
                 'title' => 'How It Works',
                 'subtitle' => 'Getting started with PerkPal is easy',
                 'content' => [
-                    [
-                        'icon' => 'search',
-                        'title' => 'Browse Perks',
-                        'description' => 'Explore our curated collection of exclusive deals and benefits',
-                    ],
-                    [
-                        'icon' => 'checkmark',
-                        'title' => 'Choose Your Favorites',
-                        'description' => 'Select the perks that best fit your lifestyle and needs',
-                    ],
-                    [
-                        'icon' => 'gift',
-                        'title' => 'Redeem & Enjoy',
-                        'description' => 'Claim your perks and start saving immediately',
-                    ],
+                    ['icon' => 'search', 'title' => 'Browse Perks', 'description' => 'Explore our curated collection of exclusive deals and benefits'],
+                    ['icon' => 'checkmark', 'title' => 'Choose Your Favorites', 'description' => 'Select the perks that best fit your lifestyle and needs'],
+                    ['icon' => 'gift', 'title' => 'Redeem & Enjoy', 'description' => 'Claim your perks and start saving immediately'],
                 ],
                 'image_url' => null,
                 'display_order' => 2,
@@ -83,7 +71,7 @@ class PageContentSeeder extends Seeder
                 'is_active' => true,
             ],
 
-            // ============ PERKS PAGE ============
+            // PERKS
             [
                 'page_name' => 'perks',
                 'section_type' => 'hero',
@@ -96,7 +84,7 @@ class PageContentSeeder extends Seeder
                 'is_active' => true,
             ],
 
-            // ============ JOURNAL PAGE ============
+            // JOURNAL
             [
                 'page_name' => 'journal',
                 'section_type' => 'hero',
@@ -109,7 +97,7 @@ class PageContentSeeder extends Seeder
                 'is_active' => true,
             ],
 
-            // ============ PARTNER PAGE ============
+            // PARTNER
             [
                 'page_name' => 'partner',
                 'section_type' => 'hero',
@@ -128,21 +116,9 @@ class PageContentSeeder extends Seeder
                 'title' => 'Why Partner With Us?',
                 'subtitle' => 'Join our network of leading brands and gain access to a thriving community of professionals',
                 'content' => [
-                    [
-                        'icon' => 'users',
-                        'title' => 'Reach Professionals',
-                        'description' => 'Connect with thousands of engaged professionals actively seeking quality services',
-                    ],
-                    [
-                        'icon' => 'trending-up',
-                        'title' => 'Increase Visibility',
-                        'description' => 'Showcase your brand to a targeted audience ready to explore new offerings',
-                    ],
-                    [
-                        'icon' => 'handshake',
-                        'title' => 'Build Relationships',
-                        'description' => 'Create lasting connections with customers who value quality and trust',
-                    ],
+                    ['icon' => 'users', 'title' => 'Reach Professionals', 'description' => 'Connect with thousands of engaged professionals actively seeking quality services'],
+                    ['icon' => 'trending-up', 'title' => 'Increase Visibility', 'description' => 'Showcase your brand to a targeted audience ready to explore new offerings'],
+                    ['icon' => 'handshake', 'title' => 'Build Relationships', 'description' => 'Create lasting connections with customers who value quality and trust'],
                 ],
                 'image_url' => null,
                 'display_order' => 2,
@@ -155,21 +131,9 @@ class PageContentSeeder extends Seeder
                 'title' => 'How It Works',
                 'subtitle' => 'Simple steps to become a partner',
                 'content' => [
-                    [
-                        'icon' => 'file-text',
-                        'title' => 'Submit Application',
-                        'description' => 'Fill out our simple partnership form with your business details',
-                    ],
-                    [
-                        'icon' => 'message-circle',
-                        'title' => 'Review & Approval',
-                        'description' => 'Our team will review your application and get in touch within 48 hours',
-                    ],
-                    [
-                        'icon' => 'rocket',
-                        'title' => 'Launch Your Perks',
-                        'description' => 'Once approved, create and launch your exclusive perks to our community',
-                    ],
+                    ['icon' => 'file-text', 'title' => 'Submit Application', 'description' => 'Fill out our simple partnership form with your business details'],
+                    ['icon' => 'message-circle', 'title' => 'Review & Approval', 'description' => 'Our team will review your application and get in touch within 48 hours'],
+                    ['icon' => 'rocket', 'title' => 'Launch Your Perks', 'description' => 'Once approved, create and launch your exclusive perks to our community'],
                 ],
                 'image_url' => null,
                 'display_order' => 3,
@@ -182,25 +146,16 @@ class PageContentSeeder extends Seeder
                 'title' => 'Frequently Asked Questions',
                 'subtitle' => 'Got questions? We have answers',
                 'content' => [
-                    [
-                        'question' => 'What types of businesses can become partners?',
-                        'answer' => 'We welcome a wide range of businesses, from restaurants and fitness centers to professional services and retail stores. If you offer value to professionals, we would love to hear from you.',
-                    ],
-                    [
-                        'question' => 'Is there a cost to become a partner?',
-                        'answer' => 'We offer flexible partnership models. Contact us to discuss the best option for your business.',
-                    ],
-                    [
-                        'question' => 'How do I track my perk performance?',
-                        'answer' => 'Partners receive access to a dashboard with real-time analytics on views, claims, and customer engagement.',
-                    ],
+                    ['question' => 'What types of businesses can become partners?', 'answer' => 'We welcome a wide range of businesses, from restaurants and fitness centers to professional services and retail stores.'],
+                    ['question' => 'Is there a cost to become a partner?', 'answer' => 'We offer flexible partnership models. Contact us to discuss the best option for your business.'],
+                    ['question' => 'How do I track my perk performance?', 'answer' => 'Partners receive access to a dashboard with real-time analytics on views, claims, and customer engagement.'],
                 ],
                 'image_url' => null,
                 'display_order' => 4,
                 'is_active' => true,
             ],
 
-            // ============ ABOUT PAGE ============
+            // ABOUT
             [
                 'page_name' => 'about',
                 'section_type' => 'hero',
@@ -219,21 +174,9 @@ class PageContentSeeder extends Seeder
                 'title' => 'What We Do',
                 'subtitle' => 'Our mission is to enhance your professional lifestyle',
                 'content' => [
-                    [
-                        'icon' => 'target',
-                        'title' => 'Curate Quality Perks',
-                        'description' => 'We carefully select and verify each partner to ensure you receive genuine value',
-                    ],
-                    [
-                        'icon' => 'shield',
-                        'title' => 'Build Trust',
-                        'description' => 'Every partnership is built on transparency and mutual benefit',
-                    ],
-                    [
-                        'icon' => 'heart',
-                        'title' => 'Create Value',
-                        'description' => 'We negotiate exclusive deals that make a real difference in your daily life',
-                    ],
+                    ['icon' => 'target', 'title' => 'Curate Quality Perks', 'description' => 'We carefully select and verify each partner to ensure you receive genuine value'],
+                    ['icon' => 'shield', 'title' => 'Build Trust', 'description' => 'Every partnership is built on transparency and mutual benefit'],
+                    ['icon' => 'heart', 'title' => 'Create Value', 'description' => 'We negotiate exclusive deals that make a real difference in your daily life'],
                 ],
                 'image_url' => null,
                 'display_order' => 2,
@@ -246,21 +189,9 @@ class PageContentSeeder extends Seeder
                 'title' => 'Who We Serve',
                 'subtitle' => 'Supporting professionals at every stage',
                 'content' => [
-                    [
-                        'icon' => 'briefcase',
-                        'title' => 'Working Professionals',
-                        'description' => 'Access perks that complement your busy lifestyle and career growth',
-                    ],
-                    [
-                        'icon' => 'trending-up',
-                        'title' => 'Entrepreneurs',
-                        'description' => 'Discover services and tools to help scale your business efficiently',
-                    ],
-                    [
-                        'icon' => 'graduation-cap',
-                        'title' => 'Recent Graduates',
-                        'description' => 'Start your professional journey with benefits designed for newcomers',
-                    ],
+                    ['icon' => 'briefcase', 'title' => 'Working Professionals', 'description' => 'Access perks that complement your busy lifestyle and career growth'],
+                    ['icon' => 'trending-up', 'title' => 'Entrepreneurs', 'description' => 'Discover services and tools to help scale your business efficiently'],
+                    ['icon' => 'graduation-cap', 'title' => 'Recent Graduates', 'description' => 'Start your professional journey with benefits designed for newcomers'],
                 ],
                 'image_url' => null,
                 'display_order' => 3,
@@ -273,25 +204,16 @@ class PageContentSeeder extends Seeder
                 'title' => 'Frequently Asked Questions',
                 'subtitle' => 'Everything you need to know',
                 'content' => [
-                    [
-                        'question' => 'How do I access the perks?',
-                        'answer' => 'Simply browse our perks directory, select the ones you like, and follow the redemption instructions. Most perks can be claimed instantly.',
-                    ],
-                    [
-                        'question' => 'Are there any membership fees?',
-                        'answer' => 'PerkPal is completely free to use. There are no hidden fees or membership costs.',
-                    ],
-                    [
-                        'question' => 'How often are new perks added?',
-                        'answer' => 'We add new perks weekly, ensuring fresh deals and opportunities for our community.',
-                    ],
+                    ['question' => 'How do I access the perks?', 'answer' => 'Browse our perks directory, select the ones you like, and follow the redemption instructions.'],
+                    ['question' => 'Are there any membership fees?', 'answer' => 'PerkPal is completely free to use. There are no hidden fees or membership costs.'],
+                    ['question' => 'How often are new perks added?', 'answer' => 'We add new perks weekly, ensuring fresh deals and opportunities for our community.'],
                 ],
                 'image_url' => null,
                 'display_order' => 4,
                 'is_active' => true,
             ],
 
-            // ============ CONTACT PAGE ============
+            // CONTACT
             [
                 'page_name' => 'contact',
                 'section_type' => 'hero',
@@ -304,7 +226,7 @@ class PageContentSeeder extends Seeder
                 'is_active' => true,
             ],
 
-            // ============ TERMS OF SERVICE ============
+            // TERMS
             [
                 'page_name' => 'terms',
                 'section_type' => 'hero',
@@ -318,19 +240,21 @@ class PageContentSeeder extends Seeder
             ],
             [
                 'page_name' => 'terms',
-                'section_type' => 'content',
-                'section_key' => 'terms_content',
+                'section_type' => 'terms',
+                'section_key' => 'terms_sections',
                 'title' => 'Terms & Conditions',
                 'subtitle' => null,
                 'content' => [
-                    'html' => '<h2>1. Acceptance of Terms</h2><p>By accessing and using PerkPal, you accept and agree to be bound by these Terms of Service.</p><h2>2. Use of Service</h2><p>You agree to use this service only for lawful purposes and in accordance with these Terms.</p><h2>3. Intellectual Property</h2><p>All content on this platform is protected by copyright and trademark laws.</p><h2>4. Limitation of Liability</h2><p>PerkPal shall not be liable for any indirect, incidental, or consequential damages.</p>',
+                    ['title' => 'Acceptance of Terms', 'description' => 'By accessing or using PerkPal, you agree to be bound by these Terms of Service and our Privacy Policy. If you do not agree, you may not use the Service.'],
+                    ['title' => 'Using the Service', 'description' => 'Use the Service only for lawful purposes and in compliance with applicable laws. You are responsible for any content you submit and for keeping your information accurate.'],
+                    ['title' => 'Accounts', 'description' => 'You may be required to provide certain information to access features. Maintain the confidentiality of your account and all activities under it.'],
                 ],
                 'image_url' => null,
                 'display_order' => 2,
                 'is_active' => true,
             ],
 
-            // ============ PRIVACY POLICY ============
+            // PRIVACY
             [
                 'page_name' => 'privacy',
                 'section_type' => 'hero',
@@ -344,19 +268,21 @@ class PageContentSeeder extends Seeder
             ],
             [
                 'page_name' => 'privacy',
-                'section_type' => 'content',
-                'section_key' => 'privacy_content',
+                'section_type' => 'terms',
+                'section_key' => 'privacy_sections',
                 'title' => 'Privacy Policy',
                 'subtitle' => null,
                 'content' => [
-                    'html' => '<h2>1. Information We Collect</h2><p>We collect information you provide directly to us, such as when you create an account or contact us.</p><h2>2. How We Use Your Information</h2><p>We use the information we collect to provide, maintain, and improve our services.</p><h2>3. Information Sharing</h2><p>We do not share your personal information with third parties except as described in this policy.</p><h2>4. Data Security</h2><p>We implement appropriate technical and organizational measures to protect your personal data.</p><h2>5. Your Rights</h2><p>You have the right to access, update, or delete your personal information at any time.</p>',
+                    ['title' => 'Information We Collect', 'description' => 'Contact details you provide, usage data, and technical data collected via analytics or logs.'],
+                    ['title' => 'How We Use Information', 'description' => 'To provide and improve the Service, personalize content, communicate with you, and analyze performance while preventing fraud or abuse.'],
+                    ['title' => 'Sharing', 'description' => 'We do not sell personal information. We may share limited data with service providers that help us operate the Service, under confidentiality obligations, and as required by law.'],
                 ],
                 'image_url' => null,
                 'display_order' => 2,
                 'is_active' => true,
             ],
 
-            // ============ TOP BAR ============
+            // TOP BAR
             [
                 'page_name' => 'topbar',
                 'section_type' => 'logo_title',
@@ -369,6 +295,67 @@ class PageContentSeeder extends Seeder
                 ],
                 'image_url' => '/images/logo.png',
                 'display_order' => 1,
+                'is_active' => true,
+            ],
+            [
+                'page_name' => 'topbar',
+                'section_type' => 'links',
+                'section_key' => 'topbar_links',
+                'title' => null,
+                'subtitle' => null,
+                'content' => [
+                    ['label' => 'Perks', 'href' => '/perks'],
+                    ['label' => 'Journal', 'href' => '/journal'],
+                    ['label' => 'Partner', 'href' => '/partner'],
+                ],
+                'image_url' => null,
+                'display_order' => 2,
+                'is_active' => true,
+            ],
+            [
+                'page_name' => 'topbar',
+                'section_type' => 'links',
+                'section_key' => 'topbar_cta',
+                'title' => null,
+                'subtitle' => null,
+                'content' => [
+                    ['label' => 'List Your Perks', 'href' => '/partner'],
+                ],
+                'image_url' => null,
+                'display_order' => 3,
+                'is_active' => true,
+            ],
+
+            // FOOTER
+            [
+                'page_name' => 'footer',
+                'section_type' => 'links',
+                'section_key' => 'footer_nav_links',
+                'title' => null,
+                'subtitle' => null,
+                'content' => [
+                    ['label' => 'About', 'href' => '/about'],
+                    ['label' => 'Contact', 'href' => '/contact'],
+                    ['label' => 'Terms of Service', 'href' => '/terms'],
+                    ['label' => 'Privacy Policy', 'href' => '/privacy'],
+                ],
+                'image_url' => null,
+                'display_order' => 1,
+                'is_active' => true,
+            ],
+            [
+                'page_name' => 'footer',
+                'section_type' => 'links',
+                'section_key' => 'footer_social_links',
+                'title' => null,
+                'subtitle' => null,
+                'content' => [
+                    ['label' => 'Twitter', 'href' => 'https://twitter.com/'],
+                    ['label' => 'Instagram', 'href' => 'https://www.instagram.com/'],
+                    ['label' => 'LinkedIn', 'href' => 'https://www.linkedin.com/'],
+                ],
+                'image_url' => null,
+                'display_order' => 2,
                 'is_active' => true,
             ],
         ];

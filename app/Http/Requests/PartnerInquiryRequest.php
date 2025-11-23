@@ -14,6 +14,7 @@ class PartnerInquiryRequest extends FormRequest
             'phone' => 'nullable|string|max:50',
             'message' => 'required|string|max:2000',
             'company_website' => 'nullable|url|max:500',
+            'contact' => 'nullable|string|max:100',
         ];
     }
 }

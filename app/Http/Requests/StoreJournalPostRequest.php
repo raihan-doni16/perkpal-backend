@@ -20,11 +20,18 @@ class StoreJournalPostRequest extends FormRequest
             'content' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
             'tags' => 'nullable|string',
-            'cover_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'cover_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:15360',
             'author_name' => 'nullable|string|max:255',
-            'author_avatar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'author_avatar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:15360',
             'is_published' => 'boolean',
             'published_at' => 'nullable|date',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'og_title' => 'nullable|string|max:255',
+            'og_description' => 'nullable|string',
+            'og_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:15360',
+            'twitter_title' => 'nullable|string|max:255',
+            'twitter_description' => 'nullable|string',
         ];
     }
 }

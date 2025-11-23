@@ -28,7 +28,7 @@ class DashboardController extends Controller
         // Recent leads
         $recent_leads = Lead::with('perk')
             ->orderBy('created_at', 'desc')
-            ->limit(10)
+            ->limit(5)
             ->get()
             ->map(function ($lead) {
                 return [

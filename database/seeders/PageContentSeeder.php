@@ -290,10 +290,10 @@ class PageContentSeeder extends Seeder
                 'title' => 'PerkPal',
                 'subtitle' => null,
                 'content' => [
-                    'logo_url' => '/images/logo.png',
+                    'logo_url' => '/logo.png',
                     'logo_alt' => 'PerkPal Logo',
                 ],
-                'image_url' => '/images/logo.png',
+                'image_url' => '/logo.png',
                 'display_order' => 1,
                 'is_active' => true,
             ],

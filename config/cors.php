@@ -23,7 +23,9 @@ return [
         env('FRONTEND_URL_PROD'),
     ]),
 
-    'allowed_origins_patterns' => [],
+    'allowed_origins_patterns' => [
+        '#^https://([a-z0-9-]+\\.)*venturenext\\.shop$#i',
+    ],
 
     'allowed_headers' => ['*'],
 

@@ -34,6 +34,10 @@ use Illuminate\Support\Facades\Route;
 
 // Public Routes
 Route::prefix('v1')->group(function () {
+    // Allow CORS preflight requests
+    Route::options('/{any}', function () {
+        return response()->noContent();
+    })->where('any', '.*');
     
     // Perks
     Route::get('/perks', [PerkController::class, 'index']);

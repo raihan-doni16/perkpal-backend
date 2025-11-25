@@ -8,24 +8,14 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    // Apply CORS headers to all routes to avoid any path mismatches.
+    'paths' => ['*'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => array_filter([
-        'http://localhost:3000',
-        'http://localhost:5173',
-        'http://localhost:5174',
-        'http://localhost:8080',
-        'https://venturenext.shop',
-        'https://www.venturenext.shop',
-        env('FRONTEND_URL'),
-        env('FRONTEND_URL_PROD'),
-    ]),
+    'allowed_origins' => ['*'],
 
-    'allowed_origins_patterns' => [
-        '#^https://([a-z0-9-]+\\.)*venturenext\\.shop$#i',
-    ],
+    'allowed_origins_patterns' => [],
 
     'allowed_headers' => ['*'],
 
@@ -33,6 +23,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => true,
+    'supports_credentials' => false,
 
 ];

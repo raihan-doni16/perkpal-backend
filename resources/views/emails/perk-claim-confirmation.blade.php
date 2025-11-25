@@ -116,7 +116,7 @@
       <td style="padding: 20px 24px; background: #f9fafb; border-top: 1px solid #e5e7eb;">
         <p style="margin: 0 0 8px 0; color: #6b7280; font-size: 13px; text-align: center;">
           Best regards,<br>
-          <strong>The PerkPal Team</strong>
+          <strong>The Venture Next Team</strong>
         </p>
         <p style="margin: 12px 0 0 0; color: #9ca3af; font-size: 12px; text-align: center;">
           This email was sent automatically. Please do not reply to this email.

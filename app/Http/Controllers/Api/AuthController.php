@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -68,6 +71,92 @@ class AuthController extends Controller
                 'role' => $request->user()->role,
                 'created_at' => $request->user()->created_at,
             ]
+        ]);
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json([
+                'success' => true,
+                'message' => 'If that email address is in our system, we have sent a password reset link to it.',
+            ]);
+        }
+
+        $token = Str::random(64);
+
+        DB::table('password_reset_tokens')->updateOrInsert(
+            ['email' => $request->email],
+            [
+                'email' => $request->email,
+                'token' => Hash::make($token),
+                'created_at' => now(),
+            ]
+        );
+
+        $user->notify(new ResetPasswordNotification($token, $request->email));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'If that email address is in our system, we have sent a password reset link to it.',
+        ]);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'token' => 'required|string',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $passwordReset = DB::table('password_reset_tokens')
+            ->where('email', $request->email)
+            ->first();
+
+        if (!$passwordReset) {
+            throw ValidationException::withMessages([
+                'email' => ['This password reset token is invalid.'],
+            ]);
+        }
+
+        if (!Hash::check($request->token, $passwordReset->token)) {
+            throw ValidationException::withMessages([
+                'token' => ['This password reset token is invalid.'],
+            ]);
+        }
+
+        if (now()->diffInMinutes($passwordReset->created_at) > 60) {
+            DB::table('password_reset_tokens')->where('email', $request->email)->delete();
+            throw ValidationException::withMessages([
+                'token' => ['This password reset token has expired.'],
+            ]);
+        }
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            throw ValidationException::withMessages([
+                'email' => ['We could not find a user with that email address.'],
+            ]);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        DB::table('password_reset_tokens')->where('email', $request->email)->delete();
+
+        $user->tokens()->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Your password has been reset successfully.',
         ]);
     }
 }

@@ -34,23 +34,19 @@ use Illuminate\Support\Facades\Route;
 
 // Public Routes
 Route::prefix('v1')->group(function () {
-    // Allow CORS preflight requests
-    Route::options('/{any}', function () {
-        return response()->noContent();
-    })->where('any', '.*');
-    
+
     // Perks
     Route::get('/perks', [PerkController::class, 'index']);
     Route::get('/perks/{slug}', [PerkController::class, 'show']);
     Route::post('/perks/{slug}/view', [PerkController::class, 'incrementView']);
-    
+
     // Categories
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/{slug}', [CategoryController::class, 'show']);
-    
+
     // Locations
     Route::get('/locations', [LocationController::class, 'index']);
-    
+
     // Static Pages
     Route::get('/pages', [StaticPageController::class, 'index']);
     Route::get('/pages/{slug}', [StaticPageController::class, 'show']);
@@ -61,7 +57,7 @@ Route::prefix('v1')->group(function () {
 
     // Media proxy for external images
     Route::get('/media/proxy', [MediaController::class, 'proxy'])->name('media.proxy');
-    
+
     // Settings
     Route::get('/settings', [SettingController::class, 'index']);
 
@@ -98,17 +94,17 @@ Route::prefix('v1/admin')->middleware(['auth:sanctum'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::get('/chart-data', [DashboardController::class, 'chartData']);
-    
+
     // Perks Management
     Route::apiResource('perks', AdminPerkController::class);
     Route::post('/perks/{id}/publish', [AdminPerkController::class, 'publish']);
     Route::post('/perks/bulk-update', [AdminPerkController::class, 'bulkUpdate']);
-    
+
     // Categories Management
     Route::apiResource('categories', AdminCategoryController::class);
     Route::apiResource('subcategories', SubcategoryController::class);
     Route::apiResource('locations', AdminLocationController::class);
-    
+
     // Leads Management
     Route::get('/leads', [AdminLeadController::class, 'index']);
     Route::get('/leads/{id}', [AdminLeadController::class, 'show']);
@@ -129,7 +125,7 @@ Route::prefix('v1/admin')->middleware(['auth:sanctum'])->group(function () {
 
     // Static Pages Management
     Route::apiResource('pages', AdminStaticPageController::class);
-    
+
     // Settings Management
     Route::get('/settings', [AdminSettingController::class, 'index']);
     Route::post('/settings', [AdminSettingController::class, 'update']);

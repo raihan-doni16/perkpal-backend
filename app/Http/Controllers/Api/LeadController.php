@@ -18,136 +18,178 @@ class LeadController extends Controller
 
     public function perkClaim(PerkClaimRequest $request)
     {
-        $lead = Lead::create([
-            'perk_id' => $request->perk_id,
-            'lead_type' => 'perk_claim',
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'company' => $request->company,
-            'message' => $request->message,
-            'ip_address' => $request->ip(),
-            'user_agent' => $request->userAgent(),
-            'metadata' => [
-                'utm_source' => $request->input('utm_source'),
-                'utm_medium' => $request->input('utm_medium'),
-                'utm_campaign' => $request->input('utm_campaign'),
-                'referrer' => $request->headers->get('referer'),
-            ],
-        ]);
-
-
-        if ($lead->perk && $lead->perk->statistics) {
-            $lead->perk->statistics->increment('claim_count');
-            $lead->perk->statistics->update(['last_claimed_at' => now()]);
-        }
-
-
-        $this->notifyLeadEmail('Perk Claim Received', [
-            "Lead Type: Perk Claim",
-            "Perk ID: {$lead->perk_id}",
-            "Name: {$lead->name}",
-            "Email: {$lead->email}",
-            "Company: {$lead->company}",
-            "Message: {$lead->message}",
-        ]);
-
-
         try {
-            Mail::to($lead->email)->send(new PerkClaimConfirmation($lead));
-        } catch (\Throwable $e) {
-            Log::error('Failed to send perk claim confirmation email to user', [
-                'email' => $lead->email,
-                'lead_id' => $lead->id,
-                'error' => $e->getMessage()
+            $lead = Lead::create([
+                'perk_id' => $request->perk_id,
+                'lead_type' => 'perk_claim',
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'company' => $request->company,
+                'message' => $request->message,
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'metadata' => [
+                    'utm_source' => $request->input('utm_source'),
+                    'utm_medium' => $request->input('utm_medium'),
+                    'utm_campaign' => $request->input('utm_campaign'),
+                    'referrer' => $request->headers->get('referer'),
+                ],
             ]);
-        }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Perk claim submitted successfully. We will contact you soon.',
-            'data' => [
-                'lead_id' => $lead->id
-            ]
-        ], 201);
+
+            if ($lead->perk && $lead->perk->statistics) {
+                $lead->perk->statistics->increment('claim_count');
+                $lead->perk->statistics->update(['last_claimed_at' => now()]);
+            }
+
+
+            $this->notifyLeadEmail('Perk Claim Received', [
+                "Lead Type: Perk Claim",
+                "Perk ID: {$lead->perk_id}",
+                "Name: {$lead->name}",
+                "Email: {$lead->email}",
+                "Company: {$lead->company}",
+                "Message: {$lead->message}",
+            ]);
+
+
+            try {
+                Mail::to($lead->email)->send(new PerkClaimConfirmation($lead));
+            } catch (\Throwable $e) {
+                Log::error('Failed to send perk claim confirmation email to user', [
+                    'email' => $lead->email,
+                    'lead_id' => $lead->id,
+                    'error' => $e->getMessage()
+                ]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Perk claim submitted successfully. We will contact you soon.',
+                'data' => [
+                    'lead_id' => $lead->id
+                ]
+            ], 201);
+        } catch (\Throwable $e) {
+            Log::error('Perk claim submission failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'request_data' => $request->except(['password'])
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to submit perk claim. Please try again later.',
+                'error' => config('app.debug') ? $e->getMessage() : null
+            ], 500);
+        }
     }
 
 
     public function partnerInquiry(PartnerInquiryRequest $request)
     {
-        $lead = Lead::create([
-            'lead_type' => 'partner_inquiry',
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'company' => $request->company,
-            'message' => $request->message,
-            'ip_address' => $request->ip(),
-            'user_agent' => $request->userAgent(),
-            'metadata' => [
-                'contact' => $request->input('contact'),
-                'company_size' => $request->input('company_size'),
-                'industry' => $request->input('industry'),
-                'utm_source' => $request->input('utm_source'),
-                'utm_medium' => $request->input('utm_medium'),
-                'utm_campaign' => $request->input('utm_campaign'),
-                'referrer' => $request->headers->get('referer'),
-            ],
-        ]);
+        try {
+            $lead = Lead::create([
+                'lead_type' => 'partner_inquiry',
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'company' => $request->company,
+                'message' => $request->message,
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'metadata' => [
+                    'contact' => $request->input('contact'),
+                    'company_size' => $request->input('company_size'),
+                    'industry' => $request->input('industry'),
+                    'utm_source' => $request->input('utm_source'),
+                    'utm_medium' => $request->input('utm_medium'),
+                    'utm_campaign' => $request->input('utm_campaign'),
+                    'referrer' => $request->headers->get('referer'),
+                ],
+            ]);
 
-        $contact = '';
-        if (is_array($lead->metadata ?? null) && array_key_exists('contact', $lead->metadata)) {
-            $contact = $lead->metadata['contact'] ?? '';
+            $contact = '';
+            if (is_array($lead->metadata ?? null) && array_key_exists('contact', $lead->metadata)) {
+                $contact = $lead->metadata['contact'] ?? '';
+            }
+
+            $this->notifyLeadEmail('Partner Inquiry Received', [
+                "Lead Type: Partner Inquiry",
+                "Name: {$lead->name}",
+                "Email: {$lead->email}",
+                "Company: {$lead->company}",
+                "Message: {$lead->message}",
+                "Contact: {$contact}",
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Partner inquiry submitted successfully. Our team will reach out to you shortly.',
+                'data' => [
+                    'lead_id' => $lead->id
+                ]
+            ], 201);
+        } catch (\Throwable $e) {
+            Log::error('Partner inquiry submission failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'request_data' => $request->except(['password'])
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to submit partner inquiry. Please try again later.',
+                'error' => config('app.debug') ? $e->getMessage() : null
+            ], 500);
         }
-
-        $this->notifyLeadEmail('Partner Inquiry Received', [
-            "Lead Type: Partner Inquiry",
-            "Name: {$lead->name}",
-            "Email: {$lead->email}",
-            "Company: {$lead->company}",
-            "Message: {$lead->message}",
-            "Contact: {$contact}",
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Partner inquiry submitted successfully. Our team will reach out to you shortly.',
-            'data' => [
-                'lead_id' => $lead->id
-            ]
-        ], 201);
     }
 
-   
+
     public function contact(ContactFormRequest $request)
     {
-        $inbox = Inbox::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'contact' => $request->input('contact'),
-            'subject' => $request->input('subject'),
-            'message' => $request->message,
-            'ip_address' => $request->ip(),
-            'user_agent' => $request->userAgent(),
-            'referrer' => $request->headers->get('referer'),
-        ]);
+        try {
+            $inbox = Inbox::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'contact' => $request->input('contact'),
+                'subject' => $request->input('subject'),
+                'message' => $request->message,
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'referrer' => $request->headers->get('referer'),
+            ]);
 
-        $this->notifyLeadEmail('Contact Form Submission', [
-            "Type: Contact Form",
-            "Name: {$inbox->name}",
-            "Email: {$inbox->email}",
-            "Contact: {$inbox->contact}",
-            "Subject: {$inbox->subject}",
-            "Message: {$inbox->message}",
-        ]);
+            $this->notifyLeadEmail('Contact Form Submission', [
+                "Type: Contact Form",
+                "Name: {$inbox->name}",
+                "Email: {$inbox->email}",
+                "Contact: {$inbox->contact}",
+                "Subject: {$inbox->subject}",
+                "Message: {$inbox->message}",
+            ]);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Contact form submitted successfully. We will get back to you soon.',
-            'data' => [
-                'inbox_id' => $inbox->id
-            ]
-        ], 201);
+            return response()->json([
+                'success' => true,
+                'message' => 'Contact form submitted successfully. We will get back to you soon.',
+                'data' => [
+                    'inbox_id' => $inbox->id
+                ]
+            ], 201);
+        } catch (\Throwable $e) {
+            Log::error('Contact form submission failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'request_data' => $request->except(['password'])
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to submit contact form. Please try again later.',
+                'error' => config('app.debug') ? $e->getMessage() : null
+            ], 500);
+        }
     }
 
     private function notifyLeadEmail(string $subject, array $lines): void

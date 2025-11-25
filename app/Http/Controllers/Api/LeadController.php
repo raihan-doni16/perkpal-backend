@@ -55,7 +55,7 @@ class LeadController extends Controller
 
 
             try {
-                Mail::to($lead->email)->send(new PerkClaimConfirmation($lead));
+                Mail::to($lead->email)->queue(new PerkClaimConfirmation($lead));
             } catch (\Throwable $e) {
                 Log::error('Failed to send perk claim confirmation email to user', [
                     'email' => $lead->email,
@@ -241,9 +241,10 @@ class LeadController extends Controller
 HTML;
 
         try {
+            // Use queue to prevent blocking and timeout
             Mail::html($html, function ($message) use ($to, $subject) {
                 $message->to($to)->subject($subject);
-            });
+            })->onQueue('emails');
         } catch (\Throwable $e) {
             Log::error('Failed to send lead notification email', ['error' => $e->getMessage()]);
         }

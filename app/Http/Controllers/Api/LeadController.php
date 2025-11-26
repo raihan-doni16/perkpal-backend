@@ -233,7 +233,7 @@ class LeadController extends Controller
             {$rows}
           </tbody>
         </table>
-        <p style="margin: 16px 0 0 0; color: #6b7280; font-size: 13px;">Generated automatically by PerkPal.</p>
+        <p style="margin: 16px 0 0 0; color: #6b7280; font-size: 13px;">Generated automatically by VentureNext.</p>
       </td>
     </tr>
   </table>

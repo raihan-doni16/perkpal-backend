@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactFormRequest;
 use App\Http\Requests\PartnerInquiryRequest;
 use App\Http\Requests\PerkClaimRequest;
+use App\Jobs\SendLeadNotificationEmail;
 use App\Mail\PerkClaimConfirmation;
 use App\Models\Lead;
 use App\Models\Inbox;
@@ -241,17 +242,8 @@ class LeadController extends Controller
 HTML;
 
         try {
-            // Dispatch email to background queue to avoid blocking the HTTP response
-            // This runs after the response is sent, so SMTP issues won't cause timeouts
-            dispatch(function () use ($html, $to, $subject) {
-                try {
-                    Mail::html($html, function ($message) use ($to, $subject) {
-                        $message->to($to)->subject($subject);
-                    });
-                } catch (\Throwable $e) {
-                    Log::error('Failed to send lead notification email', ['error' => $e->getMessage()]);
-                }
-            })->afterResponse();
+            // Dispatch to queue - will be processed by background worker
+            SendLeadNotificationEmail::dispatch($to, $subject, $html);
         } catch (\Throwable $e) {
             Log::error('Failed to queue lead notification email', ['error' => $e->getMessage()]);
         }

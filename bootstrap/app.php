@@ -14,11 +14,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // Register global middleware
+        // Register global middleware - order matters!
         $middleware->use([
-            // Force CORS headers even on errors
-            ForceCorsHeaders::class,
+            // HandleCors must come first to process OPTIONS requests
             HandleCors::class,
+            // Then ForceCorsHeaders to ensure headers on error responses
+            ForceCorsHeaders::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

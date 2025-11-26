@@ -11,6 +11,12 @@ class ForceCorsHeaders
 {
     public function handle(Request $request, Closure $next): Response
     {
+        // Handle preflight OPTIONS request immediately
+        if ($request->isMethod('OPTIONS')) {
+            $response = response('', 204);
+            return $this->addCorsHeaders($response);
+        }
+
         try {
             $response = $next($request);
         } catch (\Throwable $e) {
@@ -28,8 +34,9 @@ class ForceCorsHeaders
         // Keep permissive CORS to ensure browser accepts responses even on errors.
         $response->headers->set('Access-Control-Allow-Origin', '*');
         $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Origin, Accept');
+        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Origin, Accept, X-CSRF-TOKEN');
         $response->headers->set('Access-Control-Allow-Credentials', 'false');
+        $response->headers->set('Access-Control-Max-Age', '86400'); // 24 hours
 
         return $response;
     }

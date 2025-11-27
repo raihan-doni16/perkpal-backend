@@ -31,8 +31,8 @@ class SendLeadNotificationEmail implements ShouldQueue
     public function handle(): void
     {
         try {
-            // Send email via SMTP (Laravel Mailer)
-            Mail::html($this->html, function ($message) {
+            // Send email via SMTP (explicitly using smtp mailer)
+            Mail::mailer('smtp')->html($this->html, function ($message) {
                 $message->to($this->to)->subject($this->subject);
             });
 

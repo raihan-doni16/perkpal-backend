@@ -6,12 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
-        // Table already exists from 0001_01_01_000000_create_users_table; skip duplicate creation.
         if (Schema::hasTable('password_reset_tokens')) {
             return;
         }
@@ -25,9 +22,7 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+   
     public function down(): void
     {
         Schema::dropIfExists('password_reset_tokens');

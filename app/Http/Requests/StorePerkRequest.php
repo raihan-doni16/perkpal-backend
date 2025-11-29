@@ -54,6 +54,17 @@ class StorePerkRequest extends FormRequest
     }
 
     /**
+     * Normalize empty date fields so they aren't treated as invalid strings.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'valid_from' => $this->filled('valid_from') ? $this->input('valid_from') : null,
+            'valid_until' => $this->filled('valid_until') ? $this->input('valid_until') : null,
+        ]);
+    }
+
+    /**
      * Get custom messages for validator errors.
      */
     public function messages(): array

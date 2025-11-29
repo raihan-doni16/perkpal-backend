@@ -12,7 +12,8 @@ class PerkClaimRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'company' => 'nullable|string|max:255',
-            'phone' => 'nullable|numeric',
+            // Allow formatted phone numbers (e.g., with +, spaces, parentheses, dashes)
+            'phone' => 'nullable|string|max:50',
             'message' => 'nullable|string|max:1000',
             'utm_source' => 'nullable|string|max:100',
             'utm_medium' => 'nullable|string|max:100',

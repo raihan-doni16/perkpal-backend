@@ -30,7 +30,9 @@ class PerkController extends Controller
         if ($sort === 'popular') {
             $query->popular();
         } elseif ($sort === 'ending_soon') {
-            $query->whereNotNull('valid_until')->orderBy('valid_until', 'asc');
+            // Include perks without an end date, ordering those with dates first.
+            $query->orderByRaw('CASE WHEN valid_until IS NULL THEN 1 ELSE 0 END')
+                  ->orderBy('valid_until', 'asc');
         } else {
             $query->orderBy('published_at', 'desc')->orderBy('created_at', 'desc');
         }

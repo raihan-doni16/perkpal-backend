@@ -1,4 +1,4 @@
-is<?php
+<?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +18,13 @@ return new class extends Migration
             DB::statement("ALTER TABLE perks ALTER COLUMN location DROP DEFAULT");
             DB::statement("ALTER TABLE perks ALTER COLUMN location TYPE VARCHAR(191) USING location::text");
             DB::statement("ALTER TABLE perks ALTER COLUMN location SET DEFAULT 'global'");
+            return;
+        }
+
+        if ($driver === 'sqlite') {
+            // SQLite cannot run MODIFY statements; the original enum is already stored as text
+            // with a default, so no schema change is required for local dev/testing.
+            return;
         } else {
             DB::statement("ALTER TABLE perks MODIFY location VARCHAR(191) NOT NULL DEFAULT 'global'");
         }

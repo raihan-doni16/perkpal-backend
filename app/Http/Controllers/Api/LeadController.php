@@ -38,6 +38,8 @@ class LeadController extends Controller
                 ],
             ]);
 
+            // Ensure perk relation is loaded for email context
+            $lead->loadMissing('perk');
 
             if ($lead->perk && $lead->perk->statistics) {
                 $lead->perk->statistics->increment('claim_count');
@@ -47,7 +49,7 @@ class LeadController extends Controller
 
             $this->notifyLeadEmail('Perk Claim Received', [
                 "Lead Type: Perk Claim",
-                "Perk ID: {$lead->perk_id}",
+                "Perk: " . ($lead->perk?->title ?? "ID {$lead->perk_id}"),
                 "Name: {$lead->name}",
                 "Email: {$lead->email}",
                 "Company: {$lead->company}",
